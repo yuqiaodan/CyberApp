@@ -3,4 +3,5 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_wechat">WechatActivity</string>
     <string name="title_activity_course_one">CourseOneActivity</string>
+    <string name="title_activity_course_two">CourseTwoActivity</string>
 </resources>
