@@ -14,12 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CyberApp"
         tools:targetApi="31">
-
-
         <activity
-            android:name=".dropline.course2state.CourseTwoActivity"
+            android:name=".dropline.course3Anim.CourseThreeActivity"
             android:exported="true"
-            android:label="@string/title_activity_course_two"
+            android:label="@string/title_activity_course_three"
             android:theme="@style/Theme.CyberApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,26 +25,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".dropline.course2state.CourseTwoActivity"
+            android:exported="true"
+            android:label="@string/title_activity_course_two"
+            android:theme="@style/Theme.CyberApp"/>
         <activity
             android:name=".dropline.course1introduction.CourseOneActivity"
             android:exported="true"
             android:label="@string/title_activity_course_one"
-            android:theme="@style/Theme.CyberApp">
-
-        </activity>
-
+            android:theme="@style/Theme.CyberApp"/>
         <activity
             android:name=".HomeActivity"
             android:exported="true"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.CyberApp"/>
-
+            android:theme="@style/Theme.CyberApp" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"/>
     </application>
 
 </manifest>
