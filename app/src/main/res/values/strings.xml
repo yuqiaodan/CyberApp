@@ -5,4 +5,5 @@
     <string name="title_activity_course_one">CourseOneActivity</string>
     <string name="title_activity_course_two">CourseTwoActivity</string>
     <string name="title_activity_course_three">CourseThreeActivity</string>
+    <string name="title_activity_course_four">CourseFourActivity</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.tomato.cyber.dropline.course3Anim
+package com.tomato.cyber.dropline.course3anim
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
