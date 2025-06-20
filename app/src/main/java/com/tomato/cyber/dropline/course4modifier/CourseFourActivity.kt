@@ -59,7 +59,7 @@ class CourseFourActivity : ComponentActivity() {
                     .safeDrawingPadding()
                     .fillMaxSize()
             ) {
-                SimpleBlurTest()
+                FrostedGlassEffectExample1()
             }
         }
     }
@@ -94,7 +94,7 @@ fun FrostedGlassEffectExample1() {
                         .height(100.dp)
                         .clip(RoundedCornerShape(12.dp))
                         .background(
-                            Color.Black.copy(alpha = 0.4f)
+                            Color.Transparent
                         )
                         //设置模糊目标（前景）
                         .hazeEffect(state = hazeState,style = HazeStyle.Unspecified),
