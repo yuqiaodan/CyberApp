@@ -1,30 +1,51 @@
 package com.tomato.cyber.dropline.course4modifier
 
+import android.graphics.RenderEffect
+import android.graphics.Shader.TileMode
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.forEachGesture
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.tomato.cyber.R
 import com.tomato.cyber.log
+import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.hazeSource
+import dev.chrisbanes.haze.rememberHazeState
 import kotlin.math.min
 
 
@@ -38,11 +59,99 @@ class CourseFourActivity : ComponentActivity() {
                     .safeDrawingPadding()
                     .fillMaxSize()
             ) {
-                PointerInputModifierTest()
+                FrostedGlassEffectExample1()
             }
         }
     }
 }
+
+@Preview
+@Composable
+fun FrostedGlassEffectExample1() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        val hazeState = rememberHazeState()
+
+        //背景层：将被模糊的内容
+        Image(
+            painter = painterResource(id = R.mipmap.bg_blur_test),
+            contentDescription = "背景图",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                //设置模糊来源（背景）
+                .hazeSource(hazeState)
+        )
+
+        LazyColumn (Modifier.fillMaxSize(), contentPadding = PaddingValues(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)){
+            items (30){
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .fillMaxWidth()
+                        .height(100.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(
+                            Color.Black.copy(alpha = 0.4f)
+                        )
+                        //设置模糊目标（前景）
+                        .hazeEffect(state = hazeState,style = HazeStyle.Unspecified),
+                ) {
+                    // 内容层：负责显示清晰的文字，它没有 blur 修饰符
+                    Text(
+                        modifier = Modifier.align(Alignment.Center),
+                        text = "高斯模糊",
+                        color = Color.White
+                    )
+                }
+            }
+        }
+
+    }
+}
+
+@Preview
+@Composable
+fun FrostedGlassEffectExample() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        val hazeState = rememberHazeState()
+
+        //背景层：将被模糊的内容
+        Image(
+            painter = painterResource(id = R.mipmap.bg_blur_test),
+            contentDescription = "背景图",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                //设置模糊来源（背景）
+                .hazeSource(hazeState)
+        )
+        Box(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .size(300.dp, 200.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(
+                    Color.Black.copy(alpha = 0.4f)
+                )
+                //设置模糊目标（前景）
+                .hazeEffect(state = hazeState,style = HazeStyle.Unspecified),
+        ) {
+            // 内容层：负责显示清晰的文字，它没有 blur 修饰符
+            Text(
+                modifier = Modifier.align(Alignment.Center),
+                text = "高斯模糊背景弹窗",
+                color = Color.White
+            )
+        }
+    }
+}
+
 
 @Composable
 fun PointerInputModifierTest() {
@@ -51,14 +160,13 @@ fun PointerInputModifierTest() {
     Box( //可实现：普通点击、长按点击、双击
         Modifier
             .pointerInput(Unit) {
-
-                awaitEachGesture{
-
-                }
-
-                awaitPointerEventScope {
+                awaitEachGesture {
                     val down = awaitFirstDown()
-
+                }
+                forEachGesture {
+                    awaitPointerEventScope {
+                        val down = awaitFirstDown()
+                    }
                 }
 
                 detectTapGestures(
@@ -84,25 +192,24 @@ fun PointerInputModifierTest() {
             .background(Color.Red))
 
 
-
-  /*  Box( //可实现：普通点击、长按点击、双击
-        Modifier
-            .combinedClickable(
-                //普通点击
-                onClick = {
-                    log("点击")
-                },
-                //长按点击
-                onLongClick = {
-                    log("长按")
-                },
-                //双击
-                onDoubleClick = {
-                    log("双击")
-                }
-            )
-            .size(100.dp)
-            .background(Color.Red))*/
+    /*  Box( //可实现：普通点击、长按点击、双击
+          Modifier
+              .combinedClickable(
+                  //普通点击
+                  onClick = {
+                      log("点击")
+                  },
+                  //长按点击
+                  onLongClick = {
+                      log("长按")
+                  },
+                  //双击
+                  onDoubleClick = {
+                      log("双击")
+                  }
+              )
+              .size(100.dp)
+              .background(Color.Red))*/
 
 
 }

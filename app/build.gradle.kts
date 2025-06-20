@@ -60,4 +60,8 @@ dependencies {
 
     implementation("io.coil-kt.coil3:coil-compose:3.2.0")
     implementation("io.coil-kt.coil3:coil-network-okhttp:3.2.0")
+    implementation("dev.chrisbanes.haze:haze:1.6.4")
+    implementation("dev.chrisbanes.haze:haze-materials:1.6.4")
+
+
 }
