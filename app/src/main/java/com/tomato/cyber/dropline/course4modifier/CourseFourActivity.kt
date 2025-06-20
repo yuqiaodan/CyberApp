@@ -59,7 +59,7 @@ class CourseFourActivity : ComponentActivity() {
                     .safeDrawingPadding()
                     .fillMaxSize()
             ) {
-                FrostedGlassEffectExample1()
+                SimpleBlurTest()
             }
         }
     }
